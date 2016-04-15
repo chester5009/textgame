@@ -2,6 +2,7 @@
 import sys
 import msvcrt
 from unit import Unit
+import locale
 
 
 """class _Getch:
@@ -45,12 +46,32 @@ class _GetchWindows:
 
 def main():
     
+    coding = sys.getdefaultencoding()
+    preferCoding=locale.getpreferredencoding()
+    consoleCoding=sys.stdout.encoding
+    print coding+" "+preferCoding+" "+consoleCoding
     print u"Введите имя персонажа .."
     name=raw_input()
     
-    print u"Привет,"+unicode(name,'cp1251')+u"выбери класс персонажа.."
+    print u"Привет,"+unicode(name,consoleCoding)+u",выбери класс персонажа.."
+    print u"1-Воин 2-Гладиатор 3-Берсеркер..."
     typeHeroe=raw_input()
-    #typeHeroe=raw_input()
+    
+    if typeHeroe=="1":
+        myHeroe=Unit(name, 12, 12, 6, 7, 6,u"Воин")
+    elif typeHeroe=="2":
+        myHeroe=Unit(name, 17, 17, 2, 3, 10,u"Гладиатор")
+    elif typeHeroe=="3":
+        myHeroe=Unit(name, 10, 10, 5, 12, 5,u"Берсеркер")
+    
+    print u"Персонаж создан \n"
+    print u"Класс :"+myHeroe.get_type()
+    print u"Имя :"+unicode(myHeroe.get_name(),consoleCoding)
+    print u"Здоровье :"+str(myHeroe.get_hp())
+    print u"Минимальная атака :"+str(myHeroe.get_min_damage())
+    print u"Максимальная атака :"+str(myHeroe.get_max_damage())
+    print u"Защита :"+str(myHeroe.get_defence())
+    
     pass
 
 main();
