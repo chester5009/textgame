@@ -1,11 +1,12 @@
 #-*-coding: cp1251 -*-
 import sys
-import msvcrt
+import tty
 from unit import Unit
 import locale
+from django.utils.autoreload import termios
 
 
-"""class _Getch:
+class _Getch:
     def __init__(self):
         try:
             self.impl= _GetchWindows()
@@ -22,10 +23,10 @@ class _GetchLinux:
         fd=sys.stdin.fileno()
         old_settings=termios.tcgetattr(fd)
         try:
-            tty.setraw(fd)
+            tty.setraw(sys.stdin.fileno())
             ch=sys.stdin.read(1)
         finally:
-            termios.tcsetattr(fd,termios.TCSADRAIN, old_settings)
+           termios.tcsetattr(fd,termios.TCSANOW,old_settings)
         return ch
     
         
@@ -35,13 +36,13 @@ class _GetchWindows:
         import msvcrt
     def __call__(self):
         import msvcrt
-        return msvcrt.getch()"""
+        return msvcrt.getch()
 
 
-   
+getch=_Getch()
+symbol=getch()
 
-    
-
+print symbol
 
 
 def main():
