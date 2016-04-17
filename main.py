@@ -4,7 +4,9 @@ import tty
 from unit import Unit
 import locale
 from django.utils.autoreload import termios
+import os
 
+clear=lambda: os.system('clear')
 
 class _Getch:
     def __init__(self):
@@ -44,9 +46,24 @@ symbol=getch()
 
 print symbol
 
+gameArea=[[1,1,1,1,1,1],
+          [1,0,0,0,0,1],
+          [1,0,0,0,0,1],
+          [1,0,0,2,0,1],
+          [1,0,0,0,0,1],
+          [1,1,1,1,1,1]]
+def showField(f):
+    for i in range(len(f)):
+        oneRow = ""
+        for j in range(len(f[i])):
+            oneRow+= str(f[i][j]);
+        print oneRow
+    pass
 
 def main():
     
+    showField(gameArea)
+    clear()
     coding = sys.getdefaultencoding()
     preferCoding=locale.getpreferredencoding()
     consoleCoding=sys.stdout.encoding
@@ -72,6 +89,18 @@ def main():
     print u"Минимальная атака :"+str(myHeroe.get_min_damage())
     print u"Максимальная атака :"+str(myHeroe.get_max_damage())
     print u"Защита :"+str(myHeroe.get_defence())
+    
+    getch()
+    
+    while(True):
+        
+        showField(gameArea)
+        c=getch()
+        print c
+        if c==' ':
+            sys.exit()
+        
+        pass
     
     pass
 
